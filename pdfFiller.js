@@ -5,13 +5,13 @@ import { promises as fs } from 'fs';
 async function fillTestPdf(fieldValues) {
     try {
         // Load test.pdf
-        const pdfBytes = await fs.readFile('test.pdf');
+        const pdfBytes = await fs.readFile('letter_template.pdf');
         const pdfDoc = await PDFDocument.load(pdfBytes);
         const form = pdfDoc.getForm();
 
         // First, let's see what fields are available
         const fields = form.getFields();
-        console.log('Available fields in test.pdf:');
+        console.log('Available fields in letter_template.pdf:');
         fields.forEach(field => {
             console.log(`- ${field.getName()} (${field.constructor.name})`);
         });
@@ -45,12 +45,12 @@ async function fillTestPdf(fieldValues) {
 
         // Save the filled PDF
         const filledPdfBytes = await pdfDoc.save();
-        await fs.writeFile('filled_test.pdf', filledPdfBytes);
-        console.log('PDF saved as filled_test.pdf');
+        await fs.writeFile('filled_letter_template.pdf', filledPdfBytes);
+        console.log('PDF saved as filled_letter_template.pdf');
     } catch (error) {
         console.error('Error:', error);
         if (error.message.includes('no such file')) {
-            console.error('Make sure test.pdf exists in the current directory!');
+            console.error('Make sure letter_template.pdf exists in the current directory!');
         }
     }
 }
